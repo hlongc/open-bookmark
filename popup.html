@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Bookmark Search</title>
+  <style>
+    body {
+      width: 300px;
+      padding: 10px;
+      margin: 0;
+    }
+    .container {
+      display: flex;
+      flex-direction: column;
+      height: 400px; /* 设置固定总高度 */
+    }
+    #search {
+      width: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+      margin-bottom: 10px;
+      position: sticky;
+      top: 0;
+      background: white;
+    }
+    #results {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      overflow-y: auto; /* 添加垂直滚动 */
+      flex-grow: 1; /* 占据剩余空间 */
+    }
+    #results li {
+      padding: 8px;
+      cursor: pointer;
+      border-bottom: 1px solid #eee;
+    }
+    #results li:hover {
+      background-color: #f0f0f0;
+    }
+    #results li.selected {
+      background-color: #e0e0e0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <input type="text" id="search" placeholder="搜索书签...">
+    <ul id="results"></ul>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

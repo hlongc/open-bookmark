@@ -34,18 +34,84 @@
       padding: 8px;
       cursor: pointer;
       border-bottom: 1px solid #eee;
+      display: flex;
+      align-items: center;
     }
-    #results li:hover {
+    #results li:not(.selected):hover {
+      background-color: #f0f0f0;
+    }
+    #results li.hover {
       background-color: #f0f0f0;
     }
     #results li.selected {
-      background-color: #e0e0e0;
+      background-color: #e0e0e0 !important;
+    }
+    .item-icon {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+    .bookmark-icon {
+      background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill="%23666" d="M3.5 1.5v13l4.5-4.5 4.5 4.5v-13h-9z"/></svg>');
+    }
+    .tab-icon {
+      background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill="%23666" d="M14 3H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1zm-1 8H3V5h10v6z"/></svg>');
+    }
+    /* 添加快捷键提示样式 */
+    .shortcuts-tips {
+      font-size: 12px;
+      color: #666;
+      padding: 8px;
+      background: #f5f5f5;
+      border-bottom: 1px solid #eee;
+      margin-bottom: 8px;
+    }
+    .shortcut-key {
+      background: #e0e0e0;
+      padding: 2px 6px;
+      border-radius: 3px;
+      margin: 0 2px;
+    }
+    
+    /* 添加favicon样式 */
+    .favicon {
+      width: 16px;
+      height: 16px;
+      margin-right: 8px;
+      flex-shrink: 0;
+    }
+    
+    /* 添加关闭按钮样式 */
+    .close-button {
+      margin-left: auto;
+      opacity: 0;
+      padding: 4px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    
+    #results li:hover .close-button {
+      opacity: 0.7;
+    }
+    
+    .close-button:hover {
+      background-color: #ddd;
+      opacity: 1 !important;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <input type="text" id="search" placeholder="搜索书签...">
+    <input type="text" id="search" placeholder="搜索书签和标签页...">
+    <div class="shortcuts-tips">
+      快捷键：
+      <span class="shortcut-key">↑↓</span> 导航
+      <span class="shortcut-key">Enter</span> 新标签打开
+      <span class="shortcut-key">左键</span> 切换到已有标签
+      <span class="shortcut-key">右键</span> 关闭标签页
+    </div>
     <ul id="results"></ul>
   </div>
   <script src="popup.js"></script>

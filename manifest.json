@@ -3,7 +3,14 @@
     "name": "打开标签",
     "version": "1.0",
     "description": "快速搜索和打开当前tab页的书签",
-    "permissions": ["bookmarks", "tabs"],
+    "permissions": [
+        "bookmarks",
+        "tabs",
+        "favicon"
+    ],
+    "host_permissions": [
+        "*://*/*"
+    ],
     "icons": {
     "16": "icons/icon16.png",
     "32": "icons/icon32.png",

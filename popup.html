@@ -29,6 +29,7 @@
       margin: 0;
       overflow-y: auto; /* 添加垂直滚动 */
       flex-grow: 1; /* 占据剩余空间 */
+      position: relative;  /* 为 sticky 定位提供参考 */
     }
     #results li {
       padding: 8px;
@@ -100,6 +101,41 @@
       background-color: #ddd;
       opacity: 1 !important;
     }
+    .tabs-scope {
+        font-size: 12px;
+        padding: 8px;
+        border-bottom: 1px solid #eee;
+        color: #666;
+    }
+    .tabs-scope label {
+        margin-right: 12px;
+        cursor: pointer;
+    }
+    .tabs-scope input[type="radio"] {
+        margin-right: 4px;
+    }
+    .group-header {
+        padding: 8px;
+        font-size: 12px;
+        color: #666;
+        background-color: #f5f5f5;
+        font-weight: bold;
+        cursor: default;
+        user-select: none;
+        position: sticky;  /* 添加 sticky 定位 */
+        top: 0;           /* 设置吸顶位置 */
+        z-index: 1;       /* 确保在其他内容之上 */
+    }
+    #results li:not(.group-header) {
+        padding-left: 16px;
+    }
+    #results li.group-header:hover {
+        background-color: #f5f5f5;
+    }
+    /* 确保分组标题之间不会重叠 */
+    .group-header + .group-header {
+        top: 32px;  /* 第二个标题的吸顶位置要加上第一个标题的高度 */
+    }
   </style>
 </head>
 <body>
@@ -111,6 +147,17 @@
       <span class="shortcut-key">Enter</span> 新标签打开
       <span class="shortcut-key">左键</span> 切换到已有标签
       <span class="shortcut-key">右键</span> 关闭标签页
+    </div>
+    <!-- 添加标签页范围选择 -->
+    <div class="tabs-scope">
+        <label>
+            <input type="radio" name="tabScope" value="current" checked>
+            当前窗口
+        </label>
+        <label>
+            <input type="radio" name="tabScope" value="all">
+            所有窗口
+        </label>
     </div>
     <ul id="results"></ul>
   </div>

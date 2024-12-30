@@ -277,36 +277,35 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // 处理键盘事件
+    // 修改键盘事件处理
     searchInput.addEventListener('keydown', function (e) {
-        // 获取所有非分组标题的列表项
         const items = document.querySelectorAll('#results li:not(.group-header)');
         const itemCount = items.length;
 
-        switch (e.key) {
-            case 'ArrowDown':
+        switch (e.key.toLowerCase()) {  // 转换为小写来处理
+            case 'arrowdown':
                 e.preventDefault();
                 selectedIndex = (selectedIndex + 1) % itemCount;
                 updateSelection();
                 break;
 
-            case 'ArrowUp':
+            case 'arrowup':
                 e.preventDefault();
                 selectedIndex = selectedIndex <= 0 ? itemCount - 1 : selectedIndex - 1;
                 updateSelection();
                 break;
 
-            case 'Enter':
+            case 'enter':
                 e.preventDefault();
                 openSelectedBookmark(false); // 新开标签页
                 break;
 
-            case 'ArrowLeft':
+            case 'arrowleft':
                 e.preventDefault();
                 openSelectedBookmark(true); // 优先使用已存在的标签页
                 break;
 
-            case 'ArrowRight':
+            case 'arrowright':
                 e.preventDefault();
                 const selected = searchResults[selectedIndex];
                 if (selected && selected.type === 'tab') {
@@ -325,8 +324,46 @@ document.addEventListener('DOMContentLoaded', function () {
                     });
                 }
                 break;
+
+            case 'c':  // 添加复制功能
+                e.preventDefault();
+                if (selectedIndex >= 0 && searchResults[selectedIndex]) {
+                    const selectedItem = searchResults[selectedIndex];
+                    copyToClipboard(selectedItem.url);
+                }
+                break;
         }
     });
+
+    // 添加复制到剪贴板的函数
+    function copyToClipboard(text) {
+        // 使用现代的 Clipboard API
+        navigator.clipboard.writeText(text).then(() => {
+            // 创建并显示提示元素
+            const toast = document.createElement('div');
+            toast.textContent = '已复制链接';
+            toast.style.cssText = `
+                position: fixed;
+                bottom: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: rgba(0, 0, 0, 0.8);
+                color: white;
+                padding: 8px 16px;
+                border-radius: 4px;
+                font-size: 12px;
+                z-index: 1000;
+            `;
+            document.body.appendChild(toast);
+
+            // 2秒后移除提示
+            setTimeout(() => {
+                document.body.removeChild(toast);
+            }, 2000);
+        }).catch(err => {
+            console.error('复制失败:', err);
+        });
+    }
 
     // 初始化
     loadAllItems();
